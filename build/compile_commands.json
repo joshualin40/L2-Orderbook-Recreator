@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/joshua/Projects/orderbook/build",
+  "command": "/usr/bin/clang++  -I/Users/joshua/Projects/orderbook/include -g -std=gnu++20 -arch arm64 -o CMakeFiles/orderbook.dir/src/main.cpp.o -c /Users/joshua/Projects/orderbook/src/main.cpp",
+  "file": "/Users/joshua/Projects/orderbook/src/main.cpp",
+  "output": "CMakeFiles/orderbook.dir/src/main.cpp.o"
+}
+]

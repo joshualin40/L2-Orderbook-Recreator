@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-build.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-download.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-install.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-test.rule"
+		},
+		{
+			"file" : "/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"date_src-populate"
+		],
+		"name" : "date_src-populate"
+	}
+}

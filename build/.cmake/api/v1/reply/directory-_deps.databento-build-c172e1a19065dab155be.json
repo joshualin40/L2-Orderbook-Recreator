@@ -1,0 +1,149 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"build/_deps/databento-src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 282,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 297,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 313,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 319,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 331,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 361,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"lib/RelWithDebInfo/libdatabento.a"
+			],
+			"targetId" : "databento::@bb95a82d79c8d4480cab",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/databento",
+			"exportName" : "databentoTargets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "databento::@bb95a82d79c8d4480cab",
+					"index" : 0
+				},
+				{
+					"id" : "nlohmann_json::@1f73e43ed239fe3d59ae",
+					"index" : 8
+				},
+				{
+					"id" : "httplib::@e981bf9b2240fb44b2eb",
+					"index" : 7
+				}
+			],
+			"paths" : 
+			[
+				"_deps/databento-build/CMakeFiles/Export/6145edb9289747301012e479bd6c2c8b/databentoTargets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"build/_deps/databento-src/include/databento"
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include/databento",
+			"paths" : 
+			[
+				"build/_deps/databento-build/include/databento/system.hpp",
+				"build/_deps/databento-build/include/databento/version.hpp"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "share/licenses/databento",
+			"paths" : 
+			[
+				"build/_deps/databento-src/LICENSE"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/databento",
+			"paths" : 
+			[
+				"build/_deps/databento-build/databentoConfig.cmake",
+				"build/_deps/databento-build/databentoConfigVersion.cmake",
+				"build/_deps/databento-src/cmake/Findzstd.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/databento-build",
+		"source" : "build/_deps/databento-src"
+	}
+}

@@ -1,0 +1,14 @@
+# Target labels
+ date_src-populate
+# Source files and their labels
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/CMakeFiles/date_src-populate-complete.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-build.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-configure.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-download.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-install.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-mkdir.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-patch.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-test.rule
+/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/date_src-populate-prefix/src/date_src-populate-stamp/date_src-populate-update.rule

@@ -1,10 +1,21 @@
-cmake_minimum_required(VERSION 3.20)
-project(OrderBook CXX)
+# CMakeLists.txt
+cmake_minimum_required(VERSION 3.24)
 
-set(CMAKE_CXX_STANDARD 20)
+project(databento_historical_example)
+include(FetchContent)
 
-add_executable(orderbook
-    src/main.cpp
+FetchContent_Declare(
+  databento
+  GIT_REPOSITORY https://github.com/databento/databento-cpp
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(databento)
+
+add_executable(example src/main.cpp src/inputvalidation.cpp src/order.cpp src/orderbook.cpp src/eventlog.cpp)
+
+
+target_include_directories(example PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
 )
 
-target_include_directories(orderbook PRIVATE include)
+target_link_libraries(example PRIVATE databento::databento)

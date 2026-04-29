@@ -1,0 +1,93 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"build/_deps/date_src-src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 200,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 225,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 229,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include/date",
+			"paths" : 
+			[
+				"build/_deps/date_src-src/include/date/date.h",
+				"build/_deps/date_src-src/include/date/solar_hijri.h",
+				"build/_deps/date_src-src/include/date/islamic.h",
+				"build/_deps/date_src-src/include/date/iso_week.h",
+				"build/_deps/date_src-src/include/date/julian.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/date",
+			"exportName" : "dateConfig",
+			"exportTargets" : 
+			[
+				{
+					"id" : "date::@38757ca9a98ca91d6094",
+					"index" : 6
+				}
+			],
+			"paths" : 
+			[
+				"_deps/date_src-build/CMakeFiles/Export/a52b05f964b070ee926bcad51d3288af/dateTargets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/date",
+			"paths" : 
+			[
+				"build/_deps/date_src-src/cmake/dateConfig.cmake",
+				"build/_deps/date_src-build/dateConfigVersion.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/date_src-build",
+		"source" : "build/_deps/date_src-src"
+	}
+}

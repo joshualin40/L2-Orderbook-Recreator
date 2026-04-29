@@ -1,0 +1,79 @@
+{
+	"abstract" : true,
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library"
+		],
+		"files" : 
+		[
+			"build/_deps/date_src-src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 70,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "date::@38757ca9a98ca91d6094",
+	"interfaceSources" : 
+	[
+		{
+			"path" : "build/_deps/date_src-src/include/date/date.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"path" : "build/_deps/date_src-src/include/date/solar_hijri.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"path" : "build/_deps/date_src-src/include/date/islamic.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"path" : "build/_deps/date_src-src/include/date/iso_week.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"path" : "build/_deps/date_src-src/include/date/julian.h",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"name" : "date",
+	"paths" : 
+	{
+		"build" : "_deps/date_src-build",
+		"source" : "build/_deps/date_src-src"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"interfaceSourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"name" : "Header Files",
+			"sourceIndexes" : []
+		}
+	],
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}

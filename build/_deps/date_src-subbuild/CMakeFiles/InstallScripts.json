@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/joshua/Projects/orderbook/build/_deps/date_src-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

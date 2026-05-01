@@ -5,7 +5,9 @@ namespace db = databento;
 
 void Orderbook::insertOrder(const Order& order) { // add. 
     // in insertOrder, guard against invalid prices
-    if (order.getPrice() <= 0 || order.getPrice() == db::kUndefPrice) return;
+    if (order.getPrice() == INT64_MAX || 
+    order.getPrice() <= 0 ||
+    order.getQuantity() == 0) return;
     // check if it buy/sell side first. 
     if (order.getSideChar() == 'B') {
         // push order to back of deque at this price level (FIFO)
@@ -66,7 +68,9 @@ void Orderbook::cancelOrder(const Order& order)
 }
 void Orderbook::modifyOrder(const Order& order){ // Modify — Change an order's price and/or size 
     if (orders.count(order.getOrderID()) == 0) return;  // order not found
-
+    // validate new price 
+     if (orders.count(order.getOrderID()) == 0) return;
+    if (order.getPrice() == INT64_MAX || order.getPrice() <= 0) return; 
     Order& existing = orders.at(order.getOrderID()); 
     auto orderID = existing.getOrderID(); 
    // first check if the quantity changed. this is easier as it doesn't require moving the existing order between deques
@@ -193,13 +197,13 @@ void Orderbook::print() const
     {
         if (count++ >= levels) break;
         int64_t size = 0;
-        for (const auto& order : value) // order value refers to each order in the deque
+        for (const auto& order : value) // order value refers to each order in the deque (value)
         {
             size += order->getQuantity(); 
         }
         askLevels.push_back({key, size});
     }
-    for (int i = 9; i >= 0; i--) {
+    for (int i = (int)askLevels.size() - 1; i >= 0; i--) {
         std::cout << "\033[31m"  
                   << std::setw(12) << std::fixed << std::setprecision(2)<< askLevels[i].first / 1e9
                   << std::setw(10) << askLevels[i].second
@@ -222,10 +226,11 @@ void Orderbook::print() const
         }
         bidLevels.push_back({key, size});
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < (int)bidLevels.size(); i++) {
         std::cout << "\033[1;32m"
                  << std::setw(12) << std::fixed << std::setprecision(2)<< bidLevels[i].first / 1e9
                   << std::setw(10) << bidLevels[i].second
                   << "\033[0m\n";
     } 
 }
+

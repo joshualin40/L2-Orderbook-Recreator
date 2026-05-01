@@ -37,6 +37,8 @@ class Orderbook
         std::string getDisplaySpread() const; // returns string of the spread 
 
         void print() const;                     // displays L2 snapshot
+
+  
 };
 
 #endif

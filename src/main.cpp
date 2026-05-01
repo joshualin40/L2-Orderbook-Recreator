@@ -73,10 +73,15 @@ int main() {
     while (const db::Record* record = store.NextRecord()) {
         
         const auto& Mbo_msg = record->Get<db::MboMsg>();
+
+            // Guard here before anything else
+        if (Mbo_msg.price == INT64_MAX || Mbo_msg.size == 0) continue;
         uint64_t timestamp = Mbo_msg.hd.ts_event.time_since_epoch().count(); // convert ts_event from a DATABENTO type to the type
                                                                             // used in Order class, uint64_t
+    
         Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
-        if (Mbo_msg.flags.IsSnapshot()) {
+        if (Mbo_msg.flags.IsSnapshot()) { // if its a snap50 shot, only add it to the book but not the event log. IsSnapShot() is a flag indicated whether
+            // the record is a snapshot from the previous day or from current day. 
             book.processEvent(newOrder);   // seed book
         } else {
             book.processEvent(newOrder);
@@ -85,9 +90,10 @@ int main() {
         }
     }
     // display orderbook
-    log.print(); 
+    log.print();
     book.print(); 
-   
+    
+    
 }
 
 

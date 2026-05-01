@@ -21,7 +21,7 @@ class Order
         char action; // Can be Add, Cancel, Modify, cleaR book, Trade, Fill, or None
                     // Trade and Fill actions are
     public:
-        Order(uint64_t timestamp_, uint64_t orderid_, uint32_t quantity_, uint64_t price_, char side_, char action_); 
+        Order(uint64_t timestamp_, uint64_t orderid_, uint32_t quantity_, int64_t price_, char side_, char action_); 
         /// string getters (for display)
         std::string getTimestamp() const;  // returns time string in the format of HH:MM:SS.XXX
         std::string getSession() const; // get the session eg. SYS, PREMARKET, MARKET, AFTER HOURS
@@ -38,7 +38,7 @@ class Order
         uint32_t getQuantity() const; 
 
         // setters
-        void setPrice(uint32_t new_price); 
+        void setPrice(int64_t new_price); 
         void setQuantity(uint32_t new_quantity);
         
 };

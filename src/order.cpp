@@ -2,7 +2,7 @@
 
 
 // constructor
-Order::Order(uint64_t timestamp_, uint64_t orderid_, uint32_t quantity_, uint64_t price_, char side_, char action_) :
+Order::Order(uint64_t timestamp_, uint64_t orderid_, uint32_t quantity_, int64_t price_, char side_, char action_) :
 timestamp(timestamp_), orderid(orderid_), quantity(quantity_), price(price_), side(side_), action(action_) {}
 // string getters (for display)
 std::string Order::getTimestamp() const {
@@ -53,7 +53,7 @@ std::string Order::getAction() const
         case ('F'):
             return "Fill";
             break;
-        case ('None'):
+        case ('N'):
             return "None";
           default:
             return "Error"; // what should i do here?
@@ -117,7 +117,7 @@ uint32_t Order::getQuantity() const {
     return quantity; 
 }
 // setters
-void Order::setPrice(uint32_t new_price)
+void Order::setPrice(int64_t new_price)
 {
     price = new_price; 
 }

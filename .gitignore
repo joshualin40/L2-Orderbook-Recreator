@@ -18,6 +18,7 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
+build/
 
 CMakeLists.txt.user
 CMakeCache.txt

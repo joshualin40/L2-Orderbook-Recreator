@@ -21,7 +21,7 @@ make
 
 ### 4. Run
 ```bash
-./orderbook
+./example
 ```
 
 ## Dependencies

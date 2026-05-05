@@ -166,6 +166,7 @@ void Orderbook::processEvent(const Order& order) {
         case 'F': break;  // fill, no book update
         case 'N': break;  // none, no book update
     }
+    timestamp = order.getTimestamp(); 
 }
 
 std::string Orderbook::getDisplaySpread() const
@@ -191,6 +192,7 @@ void Orderbook::print() const
                                                         // we would like to print the top 10 lowest asks in descending order
     std::vector<std::pair<int64_t, int64_t>> bidLevels; // at the front of the bids map, we have the highest bids
                                                         // we would like to print the top 10 highest bids in descending order
+    std::cout << "ORDERBOOK: " << timestamp << std::endl;
     std::cout << "\033[31mASKS\033[0m" << std::endl;
     count = 0;
     for (const auto& [key, value] : asks) // key value refers to price, deque
@@ -234,3 +236,29 @@ void Orderbook::print() const
     } 
 }
 
+const std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::greater<int64_t>>& Orderbook::getBids() const
+{
+    return bids; 
+}
+        
+const std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::less<int64_t>>& Orderbook::getAsks() const
+{
+    return asks; 
+}
+
+void Orderbook::LoadSnapshot(L2snapshot snapshot)
+{
+     // this is to get the L2snapshot into orderbook
+    for (const auto [key, value]: snapshot.bids) // price, quantity
+    {
+        // Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
+        Order o(snapshot.time, 0, value, key, 'B', 'A');
+        processEvent(o); 
+    }
+    for (const auto [key, value]: snapshot.asks) // price, quantity
+    {
+        // Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
+        Order o(snapshot.time, 0, value, key, 'A', 'A');
+        processEvent(o); 
+    } 
+}

@@ -1,4 +1,4 @@
-#include "inputvalidation.h"
+#include "helpers.h"
 #include <ctime>
 #include <iostream>
 
@@ -31,4 +31,26 @@ bool inRange(int year, int month, int day)
     std::time_t endTime = std::time(nullptr); 
 
     return (targetTime >= startTime && targetTime <= endTime);
+}
+
+uint64_t toNanoSeconds(std::string string_)
+{
+    uint64_t hours = stoull(string_.substr(0,2));
+    uint64_t minutes = stoull(string_.substr(3,2));
+    uint64_t seconds = stoull(string_.substr(6,2));
+    return hours * 3.6e+12 + minutes * 6e+10 + seconds * 1e+9;
+}
+
+std::string timetoString(uint64_t time)
+{
+    long long hours   = time / 3.6e+12;
+    long long minutes = (time % (long long)3.6e+12) / 6e+10;
+    long long seconds = (time % (long long)6e+10)   / 1e+9;
+
+    std::ostringstream os;
+    os << std::setfill('0') << "T"
+       << std::setw(2) << hours   << ":"
+       << std::setw(2) << minutes << ":"
+       << std::setw(2) << seconds;
+    return os.str();
 }

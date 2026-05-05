@@ -11,7 +11,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(databento)
 
-add_executable(example src/main.cpp src/inputvalidation.cpp src/order.cpp src/orderbook.cpp src/eventlog.cpp)
+add_executable(example src/main.cpp src/helpers.cpp src/order.cpp src/orderbook.cpp src/eventlog.cpp 
+src/L2snapshot.cpp)
 
 
 target_include_directories(example PRIVATE

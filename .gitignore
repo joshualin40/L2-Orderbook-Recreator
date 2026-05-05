@@ -18,18 +18,50 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-build/
+#FRONTEND
+# dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+# testing
+frontend/coverage/
+# next.js
+frontend/.next/
+frontend/out/
+# production
+frontend/build/
+# misc
+frontend/.DS_Store
+frontend/*.pem
+# debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+# env files (can opt-in for committing if needed)
+frontend/.env*
+# vercel
+frontend/.vercel
+# typescript
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
 
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-CMakeUserPresets.json
-
+# BACKEND
+backend/build/
+backend/CMakeLists.txt.user
+backend/CMakeCache.txt
+backend/CMakeFiles/
+backend/CMakeScripts/
+backend/Testing/
+backend/Makefile
+backend/cmake_install.cmake
+backend/install_manifest.txt
+backend/compile_commands.json
+backend/CTestTestfile.cmake
+backend/_deps/
+backend/CMakeUserPresets.json

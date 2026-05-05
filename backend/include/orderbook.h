@@ -4,6 +4,7 @@
 #define ORDERBOOK_H
 
 #include "order.h"
+#include "L2snapshot.h"
 #include <map> 
 #include <memory>
 #include <string>
@@ -17,12 +18,9 @@ class Orderbook
         std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::greater<int64_t>> bids;  // bids, descending. [key, value] -> price, queue of orders
         std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::less<int64_t>>    asks;  // asks, ascending.  [key, value] -> price, queue of orders
         // orders at the same price level are managed in a FIFO way. a deque (double ended vector) stores the
-        int lowestask; 
-        int highestbid; 
-
 
         std::unordered_map<uint64_t, Order> orders; // keep track of all orders here. [key, value] -> orderid, Order
-
+        std::string timestamp; // string timestamp of latest order. 
         void insertOrder(const Order& order);   // action = 'A'. an "add" action
         void cancelOrder(const Order& order);   // action = 'C' a "cancel" action
         void modifyOrder(const Order& order);   // action = 'M' a "modify" action
@@ -37,6 +35,14 @@ class Orderbook
         std::string getDisplaySpread() const; // returns string of the spread 
 
         void print() const;                     // displays L2 snapshot
+
+        const std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::greater<int64_t>>& getBids() const; 
+        const std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::less<int64_t>>&   getAsks() const;
+
+        void LoadSnapshot(L2snapshot snapshot); 
+
+        
+        
 
   
 };

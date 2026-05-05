@@ -14,6 +14,7 @@ export API_KEY=your_api_key_here
 
 ### 3. Build
 ```bash
+cd backend
 mkdir build && cd build
 cmake ..
 make

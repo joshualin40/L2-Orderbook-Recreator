@@ -7,7 +7,7 @@ include(FetchContent)
 FetchContent_Declare(
   databento
   GIT_REPOSITORY https://github.com/databento/databento-cpp
-  GIT_TAG main
+  GIT_TAG        main  
 )
 FetchContent_MakeAvailable(databento)
 

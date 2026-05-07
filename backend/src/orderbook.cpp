@@ -262,3 +262,44 @@ void Orderbook::LoadSnapshot(L2snapshot snapshot)
         processEvent(o); 
     } 
 }
+
+
+std::vector<std::pair<int64_t, int64_t>> Orderbook::getAskLevels() 
+{
+    int levels = 10; 
+    int count = 0; 
+    std::vector<std::pair<int64_t, int64_t>> askLevels; // at the front of the bids map, we have the highest bids
+
+    for (const auto& [key, value] : asks) // key value refers to price, deque
+    {
+        if (count++ >= levels) break;
+        int64_t size = 0;
+        for (const auto& order : value) // order value refers to each order in the deque (value)
+        {
+            size += order->getQuantity(); 
+        }
+        askLevels.push_back({key, size});
+    }
+
+    return askLevels; 
+}
+
+std::vector<std::pair<int64_t, int64_t>> Orderbook::getBidLevels()
+{
+    int levels = 10; 
+    int count = 0; 
+    std::vector<std::pair<int64_t, int64_t>> bidLevels; // at the front of the bids map, we have the highest bids
+
+    for (const auto& [key, value] : bids)
+    {
+        if (count++ >= levels) break;
+        int64_t size = 0;
+        for (const auto& order : value)
+        {
+            size += order->getQuantity(); 
+        }
+        bidLevels.push_back({key, size});
+    }
+
+    return bidLevels; 
+}

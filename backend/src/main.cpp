@@ -9,48 +9,33 @@
 #include "eventlog.h"
 #include "orderbook.h"
 #include "L2snapshot.h"
+#include <nlohmann/json.hpp>
+#include "httplib.h"
 
 namespace db = databento;
-// Schema is the format the data comes in 
+using json = nlohmann::json;
 
-int main() {
+std::string getOrderbook(std::string date, std::string time, std::string ticker)
+{
+
+
 
     // Step 1: User inputs Date, Time, and Ticker Symbol
-    std::string startdate, enddate, ticker;
-    std::string inputtime; // in HH:MM:SS format
+    std::string enddate;
     uint64_t inputtimenanoseconds; 
     std::string startdate2, enddate2; 
     int year, month, day;   
-    while (true) // loop asking user for the date until valid date and format is given 
-    {
-    std::cout << "Enter date between 2018-05-01 and 2026-04-27 in YYYY-MM-DD format: ";
-        std::cin >> startdate;
-        year = std::stoi(startdate.substr(0,4)); 
-        month = std::stoi(startdate.substr(5,2));
-        day = std::stoi(startdate.substr(8,2));
-        if (isWeekday(year, month, day) && inRange(year, month, day)) 
-            break;
-        if (!isWeekday(year, month, day))
-        {
-            std::cout << "Invalid date: Not a weekday" << std::endl;
-        }
-        if (!inRange(year, month, day))
-        {
-            std::cout << "Invalid date: Not in range" << std::endl;;
-        }
-    }
-    enddate = startdate; 
-    startdate2 = startdate; 
-    enddate2 = startdate; 
-    std::cout << "Enter time in HH:MM:SS format: "; // add input validation later 
-    std::cin >> inputtime;  
+year = std::stoi(date.substr(0,4)); 
+    month = std::stoi(date.substr(5,2));
+    day = std::stoi(date.substr(8,2));
+
+    enddate = date; 
+    startdate2 = date; 
+    enddate2 = date; 
     // convert inputtime to nanoseconds
-    inputtimenanoseconds = toNanoSeconds(inputtime);
-    startdate += "T00:00:00";
+    inputtimenanoseconds = toNanoSeconds(time);
+    date += "T00:00:00";
     enddate += "T23:59:59"; 
-    std::cout << "Enter Ticker Symbol: "; // here create another loop asking user for a ticker until a valid ticker is given 
-                                        // should create another header/cpp file for the validation of ticker 
-    std::cin >> ticker;
 
 
     // Step 2: Extract the full day of trades of the ticker
@@ -61,7 +46,7 @@ int main() {
     std::string key(apiKey);
     auto client = db::Historical::Builder().SetKey(key).Build();
     auto store = client.TimeseriesGetRange(
-            "XNAS.ITCH", {startdate, enddate}, {ticker}, db::Schema::Mbo, db::SType::RawSymbol,
+            "XNAS.ITCH", {date, enddate}, {ticker}, db::Schema::Mbo, db::SType::RawSymbol,
     db::SType::InstrumentId, 0); // this TimeSeries processes the whole day
     
 
@@ -126,7 +111,7 @@ int main() {
     Orderbook userbook; 
     L2snapshot usersnapshot = snapshots[latest];
     userbook.LoadSnapshot(usersnapshot); 
-
+    
     while (const db::Record* record = store2.NextRecord()) {
         
         const auto& Mbo_msg = record->Get<db::MboMsg>();
@@ -139,6 +124,61 @@ int main() {
     }
     userbook.print(); 
 
+
+    // create JSON 
+    json j; 
+
+      std::vector<std::pair<int64_t, int64_t>> askLevels = userbook.getAskLevels(); 
+    for (int i = askLevels.size() - 1; i > 0; i--)
+        j["asks"][std::to_string(askLevels[i].first / 1e9)] = askLevels[i].second; 
+
+    std::vector<std::pair<int64_t, int64_t>> bidLevels = userbook.getBidLevels(); 
+    for (int i = 0; i < bidLevels.size(); i++)
+        j["bids"][std::to_string(bidLevels[i].first / 1e9)] = bidLevels[i].second; 
+
+    std::string s = j.dump(); 
+    return s; 
+}
+
+int main() {
+    httplib::Server svr;
+    svr.Get("/hi", [](const httplib::Request &, httplib::Response &res) {
+    res.set_content("Hello World!", "text/plain");});
+
+    std::string startdate, inputtime, ticker; 
+    int year, month, day;
+    while (true)
+    {
+     std::cout << "Enter date between 2018-05-01 and 2026-04-27 in YYYY-MM-DD format: ";
+     std::cin >> startdate;
+     year = std::stoi(startdate.substr(0,4)); 
+    month = std::stoi(startdate.substr(5,2));
+    day = std::stoi(startdate.substr(8,2));
+
+       if (isWeekday(year, month, day) && inRange(year, month, day)) 
+            break;
+        if (!isWeekday(year, month, day))
+        {
+            std::cout << "Invalid date: Not a weekday" << std::endl;
+        }
+        if (!inRange(year, month, day))
+        {
+            std::cout << "Invalid date: Not in range" << std::endl;;
+        }
+
+    }
+
+    std::cout << "Enter time in HH:MM:SS format: "; // add input validation later 
+    std::cin >> inputtime;  
+
+    std::cout << "Enter Ticker Symbol: "; // here create another loop asking user for a ticker until a valid ticker is given 
+                                        // should create another header/cpp file for the validation of ticker 
+    std::cin >> ticker;
+
+    std::string s = getOrderbook(startdate, inputtime, ticker); 
+    std::ofstream filestream; 
+    filestream.open("output.json");
+    filestream << s; 
 }
 
 
@@ -147,3 +187,6 @@ int main() {
 // ./build/example
 
 // cmake --build build --parallel && ./build/example
+
+// cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+// cmake --build build --parallel

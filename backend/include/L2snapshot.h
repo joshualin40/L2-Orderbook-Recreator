@@ -5,7 +5,6 @@
 #include <map>
 #include <iostream>
 #include "order.h"
-#include "orderbook.h"
 #include <sstream>
 
 class Orderbook; // forward declaration

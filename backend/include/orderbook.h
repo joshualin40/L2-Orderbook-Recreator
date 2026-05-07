@@ -21,6 +21,9 @@ class Orderbook
 
         std::unordered_map<uint64_t, Order> orders; // keep track of all orders here. [key, value] -> orderid, Order
         std::string timestamp; // string timestamp of latest order. 
+
+        std::vector<std::pair<int64_t, int64_t>> bidLevels; // bidLevels. vector of price, quantity pairs for parsing into JSON
+        std::vector<std::pair<int64_t, int64_t>> askLevels; // askLevels. vector of price, quantity pairs for parsing into JSON
         void insertOrder(const Order& order);   // action = 'A'. an "add" action
         void cancelOrder(const Order& order);   // action = 'C' a "cancel" action
         void modifyOrder(const Order& order);   // action = 'M' a "modify" action
@@ -41,6 +44,10 @@ class Orderbook
 
         void LoadSnapshot(L2snapshot snapshot); 
 
+        std::vector<std::pair<int64_t, int64_t>> getBidLevels();
+
+        std::vector<std::pair<int64_t, int64_t>> getAskLevels();
+        
         
         
 

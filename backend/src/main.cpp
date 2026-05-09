@@ -2,6 +2,7 @@
 #include <databento/record.hpp>
 #include <databento/symbology.hpp>
 #include <iostream>
+#include <fstream>
 #include <string> 
 #include <cstdint> // uint64_t, uint32_t, uint8_t, int64_t, int32_t etc. // also getenv
 #include "helpers.h"
@@ -15,17 +16,14 @@
 namespace db = databento;
 using json = nlohmann::json;
 
-std::string getOrderbook(std::string date, std::string time, std::string ticker)
+json getOrderbook(std::string date, std::string time, std::string ticker)
 {
-
-
-
     // Step 1: User inputs Date, Time, and Ticker Symbol
     std::string enddate;
     uint64_t inputtimenanoseconds; 
     std::string startdate2, enddate2; 
     int year, month, day;   
-year = std::stoi(date.substr(0,4)); 
+    year = std::stoi(date.substr(0,4)); 
     month = std::stoi(date.substr(5,2));
     day = std::stoi(date.substr(8,2));
 
@@ -52,6 +50,7 @@ year = std::stoi(date.substr(0,4));
 
     std::map<uint64_t, L2snapshot> snapshots; // map of timestamp (stored as uint64_t, L2snapshots. in nanoseconds. 
     Orderbook Daybook; 
+    Eventlog log; 
     uint64_t initialtime = 0; 
     constexpr uint64_t SNAPSHOT_INTERVAL_NS = 5 * 60 * 1'000'000'000ULL; // 5 minutes
     uint64_t currenttime = 0; 
@@ -68,6 +67,7 @@ year = std::stoi(date.substr(0,4));
                                                                             // used in Order class, uint64_t
         Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
         Daybook.processEvent(newOrder);
+
 
         if (initialtime == 0) // capture initial time stamp 
         {
@@ -112,6 +112,7 @@ year = std::stoi(date.substr(0,4));
     L2snapshot usersnapshot = snapshots[latest];
     userbook.LoadSnapshot(usersnapshot); 
     
+    Order lastorder(0, 0, 0, 0, 'N', 'N'); 
     while (const db::Record* record = store2.NextRecord()) {
         
         const auto& Mbo_msg = record->Get<db::MboMsg>();
@@ -121,8 +122,16 @@ year = std::stoi(date.substr(0,4));
                                                                             // used in Order class, uint64_t
         Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
         userbook.processEvent(newOrder);
+        log.addOrder(newOrder);
+        lastorder = newOrder; 
+    }
+    if (lastorder.getActionChar() == 'T' || lastorder.getActionChar() == 'F') // we want to simulate the corresponding cancel action
+    { // we can do this by creating a synthetic order for the userbook to process
+        Order newOrder(0, lastorder.getOrderID(), lastorder.getQuantity(), lastorder.getPrice(), lastorder.getSideChar(), 'C');
+        userbook.processEvent(newOrder); 
     }
     userbook.print(); 
+    log.print(); 
 
 
     // create JSON 
@@ -136,49 +145,34 @@ year = std::stoi(date.substr(0,4));
     for (int i = 0; i < bidLevels.size(); i++)
         j["bids"][std::to_string(bidLevels[i].first / 1e9)] = bidLevels[i].second; 
 
-    std::string s = j.dump(); 
-    return s; 
+    return j;
 }
 
 int main() {
+ 
+
     httplib::Server svr;
-    svr.Get("/hi", [](const httplib::Request &, httplib::Response &res) {
-    res.set_content("Hello World!", "text/plain");});
 
-    std::string startdate, inputtime, ticker; 
-    int year, month, day;
-    while (true)
-    {
-     std::cout << "Enter date between 2018-05-01 and 2026-04-27 in YYYY-MM-DD format: ";
-     std::cin >> startdate;
-     year = std::stoi(startdate.substr(0,4)); 
-    month = std::stoi(startdate.substr(5,2));
-    day = std::stoi(startdate.substr(8,2));
 
-       if (isWeekday(year, month, day) && inRange(year, month, day)) 
-            break;
-        if (!isWeekday(year, month, day))
-        {
-            std::cout << "Invalid date: Not a weekday" << std::endl;
-        }
-        if (!inRange(year, month, day))
-        {
-            std::cout << "Invalid date: Not in range" << std::endl;;
-        }
+    svr.Get("/orderbook", [](const httplib::Request &req, httplib::Response &res) {
+        std::string frontdate, fronttime, frontticker; 
+        res.set_header("Access-Control-Allow-Origin", "*");
 
-    }
+        frontdate = req.get_param_value("date");
+        fronttime = req.get_param_value("time");
+        frontticker = req.get_param_value("ticker");
 
-    std::cout << "Enter time in HH:MM:SS format: "; // add input validation later 
-    std::cin >> inputtime;  
+        json result = getOrderbook(frontdate, fronttime, frontticker); 
 
-    std::cout << "Enter Ticker Symbol: "; // here create another loop asking user for a ticker until a valid ticker is given 
-                                        // should create another header/cpp file for the validation of ticker 
-    std::cin >> ticker;
+        std::string s = result.dump(); 
+        std::ofstream filestream; 
+        filestream.open("output.json");
 
-    std::string s = getOrderbook(startdate, inputtime, ticker); 
-    std::ofstream filestream; 
-    filestream.open("output.json");
-    filestream << s; 
+        filestream << s; 
+        res.set_content(s, "application/json");});
+    svr.listen("0.0.0.0", 8080);
+
+
 }
 
 

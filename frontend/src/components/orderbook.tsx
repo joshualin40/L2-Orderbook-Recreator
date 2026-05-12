@@ -4,8 +4,7 @@ import {useEffect, useState} from "react"
 
 export const Orderbook = ({tickerName, orderbookData}) =>
 {
-    const [data, setData] = useState(null)
-    
+
     return (
       <div> 
         <div className="header"> 
@@ -13,8 +12,8 @@ export const Orderbook = ({tickerName, orderbookData}) =>
           {tickerName}
           </h1> 
         </div>
-        <div className="stats"> 
-            <p> Best Bid: {orderbookData["bids"][0]}</p>
+        <div className="stats">
+          <p> Object.keys(orderbookData["bids"])[0]</p>
         </div>
       </div> 
 

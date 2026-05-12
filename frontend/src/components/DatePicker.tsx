@@ -14,10 +14,11 @@ export const DatePicker = ({onDateChange}) => {
 
     function handleClick(value: Date)
     {
-        let year = value.getFullYear()
-        let month = value.getMonth() + 1
-        let day = value.getDay() 
-        onDateChange({year} + "-" + {month} + "-" + {day})
+        let year = value.getFullYear().toString().padStart(2, '0')
+        let month = (value.getMonth() + 1).toString().padStart(2, '0')
+        let day = (value.getDate()).toString().padStart(2, '0')
+        onDateChange(year + "-" + month + "-" + day) // In JavaScript/TypeScript, 
+        // {year} by itself creates an object with a property called year — it's shorthand for { year: year }
     }
 
     return (

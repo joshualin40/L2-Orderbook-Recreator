@@ -12,15 +12,16 @@ const inter = Inter({ subsets: ["latin"] })
 
 export default function Page() {
   const [ticker, setTicker] = useState("")
-  const [date, setDate] = useState("")
+  const [date, setDate] = useState("") // string
   const [time, setTime] = useState("")
-  const [orderbook, setOrderbook] = useState(null) // the orderbook Data itself
+  const [orderbook, setOrderbook] = useState("") // the orderbook Data itself
 
   
   async function fetchData() {
+    if (!ticker || !date || !time) return
+    console.log("fetchData called", { ticker, date, time })
       try {
-          const url = `http://127.0.0.1:8080/orderbook?date=${date}&time=${time}&ticker=${ticker}`
-          const response = await fetch(url)
+          const response = await fetch(`/api/orderbook?date=${date}&time=${time}&ticker=${ticker}`)
           const data = await response.json()
           setOrderbook(data) // orderbook is a JS object
       } catch (error) {
@@ -41,7 +42,7 @@ export default function Page() {
       </div> 
       {orderbook && 
       <div className="orderbook-wrapper"> 
-        <Orderbook onOrderbookChange = {setOrderbook} tickerName = {ticker} orderbookData = {orderbook}/>
+        <Orderbook tickerName = {ticker} orderbookData = {orderbook}/>
       </div> }
     </main>
   )

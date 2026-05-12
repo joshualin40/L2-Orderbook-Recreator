@@ -5,16 +5,19 @@ import './TimePicker.css'
 
 export const TimePicker = ({onTimeChange, onSubmit}) => 
 {
-    const [hours, setHours] = useState("") 
-    const [minutes, setMinutes] = useState("")
-    const [seconds, setSeconds] = useState("")
+    const [hours, setHours] = useState("08") 
+    const [minutes, setMinutes] = useState("01")
+    const [seconds, setSeconds] = useState("01")
     const hoursList = Array.from({ length: 16}, (_, i) => i + 8)
     const minutesList = Array.from({ length: 60}, (_, i) => i + 1)
     const secondsList = Array.from({ length: 60}, (_, i) => i + 1)
 
     function handleClick()
     {
-        onTimeChange({hours} + ":" + {minutes} + ":" + {seconds})
+        const hourspadded = hours.toString().padStart(2, '0');
+        const minutespadded = minutes.toString().padStart(2, '0');
+        const secondspadded = seconds.toString().padStart(2, '0');
+        onTimeChange(hourspadded + ":" + minutespadded + ":" + secondspadded)
         onSubmit()
     }
 

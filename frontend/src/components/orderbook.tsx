@@ -2,16 +2,22 @@
 
 import {useEffect, useState} from "react"
 
-export const Orderbook = () =>
+export const Orderbook = ({tickerName, orderbookData}) =>
 {
     const [data, setData] = useState(null)
+    
+    return (
+      <div> 
+        <div className="header"> 
+          <h1> 
+          {tickerName}
+          </h1> 
+        </div>
+        <div className="stats"> 
+            <p> Best Bid: {orderbookData["bids"][0]}</p>
+        </div>
+      </div> 
 
-    useEffect(() => {
-        fetch('/api/orderbook')
-      .then(res => res.json())
-      .then(data => setData(data))
-      .catch(err => console.error(err))
-    }, [])
 
-
+    )
 }

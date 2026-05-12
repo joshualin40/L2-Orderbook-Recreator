@@ -1,0 +1,97 @@
+.wrapper
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 10px;
+    font: inter;
+}
+
+.button 
+{
+    font: inter; 
+    color: 'white';
+    padding: '110px 100px';
+    borderRadius: '1px';
+    border: 'none';
+    cursor: 'pointer';
+    width: 200px;   /* or 100% to fill its container */
+
+}
+
+.sessions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.pill
+{
+border-color: black;
+border-width: 10px;
+  border-radius: 5px;
+  background-color: rgb(229, 229, 229);
+  padding: 10px
+}
+
+.label
+{
+    font-size: 10; 
+}
+
+.time
+{
+    font-size: 15;
+}
+
+.time-input-wrapper
+{
+    display: flex;
+    flex-direction: row;
+    gap: 5px; 
+    border: none; 
+    background-color: none;
+    box-shadow: none;
+}
+
+.input-dropdown
+{
+    border-radius: 0px; 
+    width: 100px
+}
+
+select {
+  appearance: none;         
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  min-width: 120px;
+  text-align: center;
+}
+
+.button
+{
+    background: rgb(229, 229, 229); 
+  color: black;
+  border: none;
+  border-radius: 0px;
+  padding: 10px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 150px; 
+}
+
+.button:active
+{
+    background: white;
+  color: black;
+  border: none;
+  border-radius: 0px;
+  padding: 10px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}

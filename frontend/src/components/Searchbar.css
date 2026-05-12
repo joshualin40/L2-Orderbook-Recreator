@@ -1,21 +1,29 @@
 .input-wrapper {
   background-color: white;
-  width: 100%;
+  width: 77%;
   border-radius: 12px;
   height: 3rem;
   padding: 0 14px;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid rgb(229, 229, 229);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   gap: 10px;
   position: relative;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .input-wrapper:focus-within {
   border-color: royalblue;
   box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.12);
+}
+
+.search-wrapper
+{
+    display: flex;
+  flex-direction: row;   /* puts icon and text side by side */
+  align-items: center;   /* vertically centers them */
+  gap: 5px;         
+  position: relative; 
 }
 
 input {
@@ -79,3 +87,12 @@ input:focus {
   background-color: #f0f4ff;
   color: royalblue;
 }
+
+.error-badge {
+   position: absolute;
+  bottom: -30px;       /* sits just below the input */
+  left: 0;
+  font-size: 12px;
+  color: #c0392b;      /* softer red than pure red */
+}
+

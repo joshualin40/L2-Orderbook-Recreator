@@ -1,0 +1,225 @@
+
+/* ---------- Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ---------- Root / Variables ---------- */
+:root {
+  --cal-font:          'DM Sans', sans-serif;
+  --cal-bg:            #ffffff;
+  --cal-border:        #e8e8e8;
+  --cal-text:          #1a1a1a;
+  --cal-muted:         #b2afaf;
+  --cal-accent:        #b2afaf;
+  --cal-accent-hover:  #9e9b9b;
+  --cal-active-bg:     rgb(178, 175, 175);
+  --cal-active-text:   #ffffff;
+  --cal-today-ring:    #1a1a1a;
+  --cal-radius:        12px;
+  --cal-tile-size:     40px;
+  --cal-tile-gap:      10px;
+}
+
+.parent
+{
+  display: flex;
+  justify-content: center;
+  max-width: 2000px; 
+}
+/* ---------- Wrapper ---------- */
+.react-calendar {
+  
+  font-family: var(--cal-font);
+  background: var(--cal-bg);
+  border: 1px solid var(--cal-border);
+  border-radius: var(--cal-radius);
+  padding: 16px 20px 24px;
+  width: 100%;
+  max-width: 2000px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+
+.calendar-search svg {
+  flex-shrink: 0;
+  opacity: 0.45;
+}
+
+/* ---------- Navigation ---------- */
+.react-calendar__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 18px;
+}
+
+.react-calendar__navigation__label {
+  font-family: var(--cal-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cal-text);
+  background: none;
+  border: none;
+  cursor: default;
+  padding: 0 12px;
+  flex: 1;
+  text-align: center;
+  pointer-events: none;   /* label is display-only; remove if you want month/year drilldown */
+}
+
+.react-calendar__navigation__arrow {
+  background: none;
+  border: 1px solid var(--cal-border);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--cal-text);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.react-calendar__navigation__arrow:hover {
+  background: var(--cal-border);
+  border-color: var(--cal-accent-hover);
+}
+
+.react-calendar__navigation__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Prev-prev / Next-next (double-arrow) buttons */
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  font-size: 11px;
+}
+
+/* ---------- Weekday headers ---------- */
+.react-calendar__month-view__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-align: center;
+  padding: 6px 0;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: underline;          /* matches screenshot underline style */
+  text-underline-offset: 3px;
+  text-decoration-color: var(--cal-muted);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cal-text);
+  cursor: default;
+}
+
+/* ---------- Days grid ---------- */
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* ---------- Individual tiles ---------- */
+.react-calendar__tile {
+  height: 30px;
+  padding: 0;
+  margin: var(--cal-tile-gap) auto;
+  width: 80px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cal-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--cal-text);
+  background: none;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+
+.react-calendar__tile:hover:not(:disabled):not(.react-calendar__tile--active) {
+  background: #f0f0f0;
+}
+
+/* Neighbouring month days */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: var(--cal-muted);
+}
+
+/* Weekend (Sat / Sun) – subtle emphasis */
+.react-calendar__month-view__days__day--weekend {
+  /* no special color by default; add below if desired */
+}
+
+/* ---------- Disabled tiles ---------- */
+.react-calendar__tile:disabled {
+  color: lightgrey;
+  cursor: not-allowed;
+  background: none;
+}
+
+/* ---------- Today ---------- */
+.react-calendar__tile--now {
+  font-weight: 600;
+}
+
+.react-calendar__tile--now::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cal-today-ring);
+}
+
+/* ---------- Selected / Active ---------- */
+.react-calendar__tile--active,
+.react-calendar__tile--active:hover {
+  background: var(--cal-active-bg);
+  color: var(--cal-active-text);
+  font-weight: 500;
+}
+
+/* Range selection – start & end */
+.react-calendar__tile--rangeStart,
+.react-calendar__tile--rangeEnd {
+  background: var(--cal-active-bg);
+  color: var(--cal-active-text);
+}
+
+/* Range middle */
+.react-calendar__tile--rangeBothEnds,
+.react-calendar__tile--rangeMiddle {
+  background: rgba(178, 175, 175, 0.25);
+  border-radius: 0;
+  color: var(--cal-text);
+}
+
+/* ---------- Year / Decade / Century views ---------- */
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  height: 48px;
+  width: auto !important;
+  border-radius: 8px;
+  font-size: 13px;
+}

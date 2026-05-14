@@ -12,13 +12,15 @@ export const TimePicker = ({onTimeChange, onSubmit}) =>
     const minutesList = Array.from({ length: 60}, (_, i) => i + 1)
     const secondsList = Array.from({ length: 60}, (_, i) => i + 1)
 
+
+  
     function handleClick()
     {
         const hourspadded = hours.toString().padStart(2, '0');
         const minutespadded = minutes.toString().padStart(2, '0');
         const secondspadded = seconds.toString().padStart(2, '0');
         onTimeChange(hourspadded + ":" + minutespadded + ":" + secondspadded)
-        onSubmit()
+        onSubmit(hourspadded + ":" + minutespadded + ":" + secondspadded)
     }
 
     function handleHourChange(event: React.ChangeEvent<HTMLSelectElement>)

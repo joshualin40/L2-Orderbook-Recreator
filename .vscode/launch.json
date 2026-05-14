@@ -4,7 +4,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug Orderbook",
+            "name": "Launch",
             "program": "${workspaceFolder}/backend/build/example",
             "args": [],
             "cwd": "${workspaceFolder}"

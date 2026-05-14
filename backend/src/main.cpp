@@ -35,6 +35,8 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
     date += "T00:00:00";
     enddate += "T23:59:59"; 
 
+    std::cout << date; 
+
 
     // Step 2: Extract the full day of trades of the ticker
     const char* apiKey = std::getenv("API_KEY");
@@ -138,7 +140,7 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
     json j; 
 
       std::vector<std::pair<int64_t, int64_t>> askLevels = userbook.getAskLevels(); 
-    for (int i = askLevels.size() - 1; i > 0; i--)
+    for (int i = askLevels.size() - 1; i >= 0; i--)
         j["asks"][std::to_string(askLevels[i].first / 1e9)] = askLevels[i].second; 
 
     std::vector<std::pair<int64_t, int64_t>> bidLevels = userbook.getBidLevels(); 
@@ -149,32 +151,47 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
 }
 
 int main() {
- 
 
     httplib::Server svr;
-
-
+    
     svr.Get("/orderbook", [](const httplib::Request &req, httplib::Response &res) {
-        std::string frontdate, fronttime, frontticker; 
-        res.set_header("Access-Control-Allow-Origin", "*");
+        try {
+            std::string frontdate, fronttime, frontticker; 
+            res.set_header("Access-Control-Allow-Origin", "*");
 
-        frontdate = req.get_param_value("date");
-        fronttime = req.get_param_value("time");
-        frontticker = req.get_param_value("ticker");
+            frontdate = req.get_param_value("date");
+            fronttime = req.get_param_value("time");
+            frontticker = req.get_param_value("ticker");
 
-        json result = getOrderbook(frontdate, fronttime, frontticker); 
+            std::cout << frontdate; 
 
-        std::string s = result.dump(); 
-        std::ofstream filestream; 
-        filestream.open("output.json");
+            json result = getOrderbook(frontdate, fronttime, frontticker); 
 
-        filestream << s; 
-        res.set_content(s, "application/json");});
+            std::string s = result.dump(); 
+            std::ofstream filestream; 
+            filestream.open("output.json");
+
+            filestream << s; 
+            res.set_content(s, "application/json");
+        }
+        catch (const std::exception& e) {
+            std::cout << "Error: " << e.what() << std::endl;
+            res.status = 500;
+            res.set_content(e.what(), "text/plain");
+        }
+    });
+
     svr.listen("0.0.0.0", 8080);
-
-
 }
+// cmake -S . -B build
+// cmake --build build --parallel
+// ./build/example
 
+// cmake --build build --parallel && ./build/example
+
+// cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+// cmake --build build --parallel
+  
 
 // cmake -S . -B build
 // cmake --build build --parallel

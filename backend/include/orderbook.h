@@ -47,11 +47,6 @@ class Orderbook
         std::vector<std::pair<int64_t, int64_t>> getBidLevels();
 
         std::vector<std::pair<int64_t, int64_t>> getAskLevels();
-        
-        
-        
-
-  
 };
 
 #endif

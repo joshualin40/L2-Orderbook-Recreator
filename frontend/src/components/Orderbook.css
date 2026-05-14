@@ -1,0 +1,26 @@
+.stats {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.levels-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.bids-header {
+    display: flex; 
+    align-items: center
+}
+
+.price-column
+{
+    margin-right: 300px;
+}
+
+.orderbookLevels
+{
+    display: flex; 
+    flex-direction: row; 
+    justify-Content: center; 
+}

@@ -31,7 +31,7 @@ make
 ./example
 ```
 
-### Frontend
+### Frontend (Open a new terminal while backend runs)
 
 **5. Install dependencies and start**
 ```bash

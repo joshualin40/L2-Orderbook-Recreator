@@ -35,7 +35,7 @@ export default function Page() {
   return (
     <main>
       <div className="searchbar-wrapper"> 
-        <SearchBar onTickerChange={setTicker}/> 
+        <SearchBar orderbook = {orderbook} onTickerChange={setTicker}/> 
       </div> 
       <div className="datepicker-wrapper">  
         <DatePicker onDateChange={setDate}/>

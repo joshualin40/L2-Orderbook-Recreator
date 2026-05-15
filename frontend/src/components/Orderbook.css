@@ -3,24 +3,29 @@
     gap: 10px;
     justify-content: center;
 }
-.levels-wrapper {
-    display: flex;
-    flex-direction: row;
-}
+
 
 .bids-header {
     display: flex; 
     align-items: center
 }
 
-.price-column
+.bidsTable
 {
-    margin-right: 300px;
+    border-collapse: collapse;
+    margin-left: -75px;
+}
+
+.asksTable
+{
+    border-collapse: collapse; 
 }
 
 .orderbookLevels
 {
     display: flex; 
     flex-direction: row; 
-    justify-Content: center; 
+    justify-content: center; 
+    gap: 75px; 
 }
+

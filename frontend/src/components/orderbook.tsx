@@ -13,7 +13,8 @@ export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orde
       const newTotal = Number(previousTotal) + Number(quantity)
       return [...acc, [price, quantity, newTotal]]
     }, [] as (string | number)[][]) // calculate the running total for each element of the 2d array 
-
+    const maxBidTotal = Number(formattedBids.at(-1)[2])
+    
 
     const asks = Object.entries(orderbookData.asks)
     let formattedAsks = asks.map(([price, quantity]) => ([Number(price).toFixed(2),quantity]) )
@@ -23,6 +24,8 @@ export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orde
       const newTotal = Number(previousTotal) + Number(quantity) 
       return [...acc, [price, quantity, newTotal]]
     }, [] as (string | number)[][])
+    const maxAskTotal = Number(formattedAsks.at(-1)[2])
+
 
     const spread = (Number(formattedAsks[0][0]) - Number(formattedBids[0][0])).toFixed(2)
 
@@ -41,32 +44,48 @@ export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orde
           <table className="bidsTable"> 
             <thead className="bidsHeader">
               <tr>
-                <th>Price</th>
-                <th>Size</th>
-                <th>Total</th>
+                <th style={{textAlign:'left', paddingRight:'350px'}}>price</th>
+                <th style={{textAlign:'left', paddingRight:'150px'}}>size</th>
+                <th style={{textAlign:'left'}}>total</th>
               </tr>
             </thead>
-              <tbody className="bidLevels"> 
-                {formattedBids.map(([price, quantity, runningtotal], index) =>
-                   <tr key={index} style={{position:"relative"}}> 
-                   <div style={{position: "absolute", backgroundColor:"green", width: "10px"}}> </div>
-                   <td>{price}</td> 
-                   <td>{quantity}</td> 
-                   <td>{runningtotal}</td> 
-                   </tr>)}
+                <tbody className="bidLevels">
+              {formattedBids.map(([price, quantity, runningtotal], index) => {
+                const pct = (Number(runningtotal) / maxBidTotal) * 100
+                return (
+                  <tr
+                    key={index}
+                    style={{
+                    background: `linear-gradient(to left, rgba(0, 180, 80, 0.15) ${pct}%, transparent ${pct}%)`,
+                    }}
+                  >
+                    <td style={{color: "green"}}>{price}</td>
+                    <td>{quantity}</td>
+                    <td>{runningtotal}</td>
+                  </tr>
+                )
+              })}
               </tbody> 
           </table> 
           <table className="asksTable"> 
             <thead className="asksHeader">
               <tr>
-                <th>Price</th>
-                <th>Size</th>
-                <th>Total</th>
+                <th style={{textAlign:'left', paddingRight:'350px'}}>price</th>
+                <th style={{textAlign:'left', paddingRight:'150px'}}>size</th>
+                <th>total</th>
               </tr>
             </thead>
               <tbody className="askLevels"> 
-                {formattedAsks.map(([price, quantity, runningtotal], index) => 
-                <tr key={index}> <td>{price}</td> <td>{quantity}</td> <td>{runningtotal}</td> </tr>)}
+                {formattedAsks.map(([price, quantity, runningtotal], index) => {
+                const pct = (Number(runningtotal) / maxAskTotal) * 100
+                return (
+                <tr key={index} style={{
+                      background: `linear-gradient(to right, rgba(220, 50, 50, 0.15) ${pct}%, transparent ${pct}%)`,
+                        }}>
+                  <td style={{color: 'red'}}>{price}</td> 
+                  <td>{quantity}</td> 
+                  <td>{runningtotal}</td> 
+                </tr>)})}
               </tbody> 
           </table> 
         </div>

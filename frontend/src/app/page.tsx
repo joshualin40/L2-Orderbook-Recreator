@@ -17,6 +17,8 @@ export default function Page() {
   const [orderbook, setOrderbook] = useState(null) // the orderbook Data 
   const [loading, setLoading] = useState(false)
   const [error, showError] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+  const [empty, setEmpty] = useState(false)
 
   
   async function fetchData(currentTicker: string, currentDate: string, currenttime: string) {
@@ -29,16 +31,18 @@ export default function Page() {
           const data = await response.json()
           setOrderbook(data) // orderbook is a JS object
           setLoading(false)
+          setLoaded(true)
       } catch (error) {
         console.log(error)
         showError(true)
+        setLoaded(false)
       }
   }
 
   return (
     <main>
       <div className="searchbar-wrapper"> 
-        <SearchBar orderbook = {orderbook} onTickerChange={setTicker}/> 
+        <SearchBar orderbook = {orderbook} loaded = {loaded} onTickerChange={setTicker}/> 
       </div> 
       <div className="datepicker-wrapper">  
         <DatePicker onDateChange={setDate}/>
@@ -51,10 +55,11 @@ export default function Page() {
       </div>}
       {orderbook && 
       <div className="orderbook-wrapper"> 
-        <Orderbook tickerName = {ticker} orderbookData = {orderbook}/>
+        <Orderbook tickerName = {ticker} setEmpty = {setEmpty} orderbookData = {orderbook}/>
       </div> }
       {error && 
       <p> Error! Ensure that you have exported your API_KEY to the backend terminal and that your backend is running. </p>}
+      {!loading && loaded && empty && <p> No Data</p> } 
     </main>
   )
 }

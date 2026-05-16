@@ -3,14 +3,20 @@
 import {useEffect, useState} from "react"
 import './Orderbook.css'
 
-export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orderbookData: {
-  bids: Array<{price: number, quantity: number}>,
-  asks: Array<{price: number, quantity: number}>
-}}) =>
+export const Orderbook = ({tickerName, setEmpty, orderbookData}: {
+  tickerName: string, 
+  setEmpty: React.Dispatch<React.SetStateAction<boolean>>,
+  orderbookData: {
+    bids: Array<{price: number, quantity: number}>,
+    asks: Array<{price: number, quantity: number}>
+  }
+}) =>
 {
     if (!orderbookData?.bids?.length || !orderbookData?.asks?.length) {
+      setEmpty(true)
     return <div></div>}
-    
+
+    setEmpty(false)
     const bids = orderbookData.bids // Object.entries() returns a 2D array 
      // where each inner array has two elements: the key (index 0) and the value (index 1).
     let formattedBids = bids.map(({price, quantity}) => [Number(price).toFixed(2), quantity])

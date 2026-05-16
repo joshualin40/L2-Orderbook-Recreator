@@ -37,8 +37,7 @@ export const SearchBar = ({orderbook, loaded, onTickerChange}) => {
         setInput(item)
         setFiltered([]) 
         setRecent([...recent, item])
-        if (!loaded)
-            onTickerChange(item)
+        onTickerChange(item)
     }
     function handleBlur(event)
     {   

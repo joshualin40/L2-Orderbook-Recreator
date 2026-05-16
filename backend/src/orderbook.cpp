@@ -249,17 +249,18 @@ const std::map<int64_t, std::deque<std::unique_ptr<Order>>, std::less<int64_t>>&
 
 void Orderbook::LoadSnapshot(L2snapshot snapshot)
 {
+     uint64_t syntheticId = UINT64_MAX;
      // this is to get the L2snapshot into orderbook
     for (const auto [key, value]: snapshot.bids) // price, quantity
     {
         // Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
-        Order o(snapshot.time, 0, value, key, 'B', 'A');
+        Order o(snapshot.time, syntheticId--, value, key, 'B', 'A');
         processEvent(o); 
     }
     for (const auto [key, value]: snapshot.asks) // price, quantity
     {
         // Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
-        Order o(snapshot.time, 0, value, key, 'A', 'A');
+        Order o(snapshot.time, syntheticId--, value, key, 'A', 'A');
         processEvent(o); 
     } 
 }

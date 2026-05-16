@@ -22,6 +22,7 @@ class Order
                     // Trade and Fill actions are
     public:
         Order(uint64_t timestamp_, uint64_t orderid_, uint32_t quantity_, int64_t price_, char side_, char action_); 
+
         /// string getters (for display)
         std::string getTimestamp() const;  // returns time string in the format of HH:MM:SS.XXX
         std::string getSession() const; // get the session eg. SYS, PREMARKET, MARKET, AFTER HOURS
@@ -36,6 +37,7 @@ class Order
         uint64_t getOrderID() const;
         int64_t getPrice() const; // returns the original number. ie the price where every 1 unit corresponds to 1e-9
         uint32_t getQuantity() const; 
+        uint64_t getTimeStampNano() const; 
 
         // setters
         void setPrice(int64_t new_price); 

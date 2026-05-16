@@ -1,6 +1,6 @@
 # Orderbook
 
-Reconstructs a historical L2 orderbook from [Databento](https://databento.com/) market data given a date, time, and ticker symbol. Takes historical Market-By-Order (MBO) data and constructs an L2 orderbook.
+Reconstructs a L2 orderbook from [Databento](https://databento.com/) market data given a date, time, and ticker symbol. Takes L3 historical Market-By-Order (MBO) data and constructs the L2 orderbook.
 
 Built with a C++ backend and React frontend.
 
@@ -48,3 +48,19 @@ Opens at `http://localhost:3000` by default.
 - CMake
 - React
 - Node.js
+
+# Third Party Libraries
+
+## cpp-httplib
+- Author: Yuji Hirose
+- Source: https://github.com/yhirose/cpp-httplib
+- License: MIT
+
+## nlohmann/json
+- Author: Niels Lohmann
+- Source: https://github.com/nlohmann/json
+- License: MIT
+
+## Databento C++ Client
+- Source: https://github.com/databento/databento-cpp
+- License: Apache 2.0

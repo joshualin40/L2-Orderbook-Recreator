@@ -35,15 +35,12 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
     date += "T00:00:00";
     enddate += "T23:59:59"; 
 
-    std::cout << date; 
 
 
     // Step 2: Extract the full day of trades of the ticker
     const char* apiKey = std::getenv("API_KEY");
-    if (!apiKey) {
-        throw("Missing API Key");
-    }
-    std::string key(apiKey);
+    std::string key((apiKey));
+
     auto client = db::Historical::Builder().SetKey(key).Build();
     auto store = client.TimeseriesGetRange(
             "XNAS.ITCH", {date, enddate}, {ticker}, db::Schema::Mbo, db::SType::RawSymbol,
@@ -151,6 +148,10 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
 }
 
 int main() {
+    const char* apiKey = std::getenv("API_KEY");
+    if (!apiKey) {
+        throw std::runtime_error("Missing API Key");
+    }
 
     httplib::Server svr;
     
@@ -183,21 +184,5 @@ int main() {
 
     svr.listen("0.0.0.0", 8080);
 }
-// cmake -S . -B build
-// cmake --build build --parallel
-// ./build/example
 
-// cmake --build build --parallel && ./build/example
 
-// cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-// cmake --build build --parallel
-  
-
-// cmake -S . -B build
-// cmake --build build --parallel
-// ./build/example
-
-// cmake --build build --parallel && ./build/example
-
-// cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-// cmake --build build --parallel

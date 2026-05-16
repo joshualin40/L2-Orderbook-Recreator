@@ -2,6 +2,12 @@
 #include <ctime>
 #include <iostream>
 
+namespace {
+    constexpr uint64_t NS_PER_HOUR   = 3'600'000'000'000ULL;
+    constexpr uint64_t NS_PER_MINUTE =    60'000'000'000ULL;
+    constexpr uint64_t NS_PER_SECOND =     1'000'000'000ULL;
+}
+
 bool isWeekday(int year, int month, int day) {
     std::tm time_in = {0};  // time_in is a struct of type tm 
     time_in.tm_year = year - 1900; // Years since 1900
@@ -38,14 +44,14 @@ uint64_t toNanoSeconds(std::string string_)
     uint64_t hours = stoull(string_.substr(0,2));
     uint64_t minutes = stoull(string_.substr(3,2));
     uint64_t seconds = stoull(string_.substr(6,2));
-    return hours * 3.6e+12 + minutes * 6e+10 + seconds * 1e+9;
+    return hours * NS_PER_HOUR + minutes * NS_PER_MINUTE + seconds * NS_PER_SECOND; 
 }
 
 std::string timetoString(uint64_t time)
 {
-    long long hours   = time / 3.6e+12;
-    long long minutes = (time % (long long)3.6e+12) / 6e+10;
-    long long seconds = (time % (long long)6e+10)   / 1e+9;
+    long long hours   = time / NS_PER_HOUR;
+    long long minutes = (time % (long long)NS_PER_HOUR) / NS_PER_MINUTE;
+    long long seconds = (time % (long long)NS_PER_MINUTE)   / NS_PER_SECOND;
 
     std::ostringstream os;
     os << std::setfill('0') << "T"

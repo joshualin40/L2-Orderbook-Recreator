@@ -14,8 +14,9 @@ export default function Page() {
   const [ticker, setTicker] = useState("")
   const [date, setDate] = useState("") // string
   const [time, setTime] = useState("")
-  const [orderbook, setOrderbook] = useState(null) // the orderbook Data itself
+  const [orderbook, setOrderbook] = useState(null) // the orderbook Data 
   const [loading, setLoading] = useState(false)
+  const [error, showError] = useState(false)
 
   
   async function fetchData(currenttime: string) {
@@ -28,7 +29,8 @@ export default function Page() {
           setOrderbook(data) // orderbook is a JS object
           setLoading(false)
       } catch (error) {
-          console.log(error)
+        console.log(error)
+        showError(true)
       }
   }
 
@@ -43,13 +45,15 @@ export default function Page() {
       <div className="timepicker-wrapper"> 
         <TimePicker onTimeChange={setTime} onSubmit = {fetchData}/> 
       </div> 
-      {loading && <div>
+      {loading && !error && <div>
         <p> Loading...</p> 
       </div>}
       {orderbook && 
       <div className="orderbook-wrapper"> 
         <Orderbook tickerName = {ticker} orderbookData = {orderbook}/>
       </div> }
+      {error && 
+      <p> Error! Ensure that you have exported your API_KEY to the backend terminal and that your backend is running. </p>}
     </main>
   )
 }

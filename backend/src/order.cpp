@@ -13,6 +13,8 @@ std::string Order::getTimestamp() const {
     oss << std::put_time(t, "%H:%M:%S") << "." << std::setfill('0') << std::setw(3) << std::to_string(millis);
     return oss.str();
 }
+
+
 std::string Order::getSession() const
 {
     // convert nanoseconds to seconds
@@ -115,6 +117,9 @@ int64_t Order::getPrice() const
 }
 uint32_t Order::getQuantity() const {
     return quantity; 
+}
+uint64_t Order::getTimeStampNano() const {
+    return timestamp; 
 }
 // setters
 void Order::setPrice(int64_t new_price)

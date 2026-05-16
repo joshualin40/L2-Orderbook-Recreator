@@ -32,7 +32,7 @@ void L2snapshot::print() const
             bidLevels.push_back({price, quantity}); 
         }
 
-    for (int i = 0 ; i <  (int)bidLevels.size() - 1;  i++)
+    for (int i = 0 ; i <  (int)bidLevels.size();  i++)
     {
         std::cout << "\033[31m"  
                   << std::setw(12) << std::fixed << std::setprecision(2)<< bidLevels[i].first / 1e9

@@ -5,7 +5,7 @@ namespace db = databento;
 
 void Orderbook::insertOrder(const Order& order) { // add. 
     // in insertOrder, guard against invalid prices
-    if (orders.find(order.getOrderID()) == orders.end()) return; 
+    if (orders.find(order.getOrderID()) != orders.end()) return; 
     if (order.getPrice() == INT64_MAX || 
     order.getPrice() <= 0 ||
     order.getQuantity() == 0) return;
@@ -68,14 +68,11 @@ void Orderbook::cancelOrder(const Order& order)
     orders.erase(order.getOrderID()); 
 }
 void Orderbook::modifyOrder(const Order& order){ // Modify — Change an order's price and/or size 
-    auto it = orders.find(order.getOrderID());
-    if (it == orders.end()) return;  // order not found
-    auto orderID = order.getOrderID(); 
-
-    // Validate new price
-    if (order.getPrice() == INT64_MAX || order.getPrice() <= 0) return;
-    Order& existing = orders.at(orderID); 
-    it->second = order;  // update in place — no erase/re-insert needed
+    if (orders.count(order.getOrderID()) == 0) return;  // order not found
+    // validate new price 
+    if (order.getPrice() == INT64_MAX || order.getPrice() <= 0) return; 
+    Order& existing = orders.at(order.getOrderID()); 
+    auto orderID = existing.getOrderID(); 
 
    // first check if the quantity changed. this is easier as it doesn't require moving the existing order between deques
    if (existing.getQuantity() != order.getQuantity())

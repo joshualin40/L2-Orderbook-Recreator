@@ -22,6 +22,7 @@ export default function Page() {
   async function fetchData(currenttime: string) {
     console.log("fetchData called", { ticker, date, time })
       try {
+          showError(false)
           setOrderbook(null)
           setLoading(true)
           const response = await fetch(`/api/orderbook?date=${date}&time=${currenttime}&ticker=${ticker}`)

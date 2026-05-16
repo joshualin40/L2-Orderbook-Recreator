@@ -39,6 +39,9 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
 
     // Step 2: Extract the full day of trades of the ticker
     const char* apiKey = std::getenv("API_KEY");
+    if (!apiKey) {
+        throw std::runtime_error("Missing API Key");
+    }
     std::string key((apiKey));
 
     auto client = db::Historical::Builder().SetKey(key).Build();
@@ -148,10 +151,6 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
 }
 
 int main() {
-    const char* apiKey = std::getenv("API_KEY");
-    if (!apiKey) {
-        throw std::runtime_error("Missing API Key");
-    }
 
     httplib::Server svr;
     
@@ -164,7 +163,6 @@ int main() {
             fronttime = req.get_param_value("time");
             frontticker = req.get_param_value("ticker");
 
-            std::cout << frontdate; 
 
             json result = getOrderbook(frontdate, fronttime, frontticker); 
 

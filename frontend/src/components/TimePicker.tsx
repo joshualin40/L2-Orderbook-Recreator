@@ -3,7 +3,7 @@
 import {useState} from "react"
 import './TimePicker.css'
 
-export const TimePicker = ({onTimeChange, onSubmit}) => 
+export const TimePicker = ({onTimeChange, tickerName, date, onSubmit}) => 
 {
     const [hours, setHours] = useState("08") 
     const [minutes, setMinutes] = useState("01")
@@ -20,7 +20,7 @@ export const TimePicker = ({onTimeChange, onSubmit}) =>
         const minutespadded = minutes.toString().padStart(2, '0');
         const secondspadded = seconds.toString().padStart(2, '0');
         onTimeChange(hourspadded + ":" + minutespadded + ":" + secondspadded)
-        onSubmit(hourspadded + ":" + minutespadded + ":" + secondspadded)
+        onSubmit(tickerName, date, hourspadded + ":" + minutespadded + ":" + secondspadded)
     }
 
     function handleHourChange(event: React.ChangeEvent<HTMLSelectElement>)

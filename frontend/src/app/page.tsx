@@ -14,18 +14,18 @@ export default function Page() {
   const [ticker, setTicker] = useState("")
   const [date, setDate] = useState("") // string
   const [time, setTime] = useState("")
-  const [orderbook, setOrderbook] = useState({bids: [], asks: []}) // the orderbook Data 
+  const [orderbook, setOrderbook] = useState(null) // the orderbook Data 
   const [loading, setLoading] = useState(false)
   const [error, showError] = useState(false)
 
   
-  async function fetchData(currenttime: string) {
-    console.log("fetchData called", { ticker, date, time })
+  async function fetchData(currentTicker: string, currentDate: string, currenttime: string) {
+    console.log("fetchData called", { currentTicker, currentDate, currenttime })
       try {
           showError(false)
-          setOrderbook(null)
+          setOrderbook({bids: [], asks: []})
           setLoading(true)
-          const response = await fetch(`/api/orderbook?date=${date}&time=${currenttime}&ticker=${ticker}`)
+          const response = await fetch(`/api/orderbook?date=${currentDate}&time=${currenttime}&ticker=${currentTicker}`)
           const data = await response.json()
           setOrderbook(data) // orderbook is a JS object
           setLoading(false)
@@ -44,7 +44,7 @@ export default function Page() {
         <DatePicker onDateChange={setDate}/>
       </div> 
       <div className="timepicker-wrapper"> 
-        <TimePicker onTimeChange={setTime} onSubmit = {fetchData}/> 
+        <TimePicker onTimeChange={setTime} tickerName={ticker} date={date} onSubmit = {fetchData}/> 
       </div> 
       {loading && !error && <div>
         <p> Loading...</p> 

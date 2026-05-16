@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react"
 
 
 
-export const SearchBar = ({orderbook, onTickerChange}) => {
+export const SearchBar = ({orderbook, loaded, onTickerChange}) => {
     const MAX_SIZE = 5; 
     const [input, setInput] = useState("")
     const [tickers, setTickers] = useState<string[]>([])
@@ -37,7 +37,7 @@ export const SearchBar = ({orderbook, onTickerChange}) => {
         setInput(item)
         setFiltered([]) 
         setRecent([...recent, item])
-        if (!orderbook)
+        if (!loaded)
             onTickerChange(item)
     }
     function handleBlur(event)

@@ -3,22 +3,27 @@
 import {useEffect, useState} from "react"
 import './Orderbook.css'
 
-export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orderbookData: {bids: Record<string, number>, asks: Record<string, number>}}) =>
+export const Orderbook = ({tickerName, orderbookData}: {tickerName: string, orderbookData: {
+  bids: Array<{price: number, quantity: number}>,
+  asks: Array<{price: number, quantity: number}>
+}}) =>
 {
-    const bids = Object.entries(orderbookData.bids) // Object.entries() returns a 2D array 
+    if (!orderbookData?.bids?.length || !orderbookData?.asks?.length) {
+    return <div></div>}
+    
+    const bids = orderbookData.bids // Object.entries() returns a 2D array 
      // where each inner array has two elements: the key (index 0) and the value (index 1).
-    let formattedBids = bids.map(([price, quantity]) => ([Number(price).toFixed(2),quantity]) )
+    let formattedBids = bids.map(({price, quantity}) => [Number(price).toFixed(2), quantity])
     formattedBids = formattedBids.reduce((acc, [price, quantity]) => {
       const previousTotal = acc.length > 0 ? acc[acc.length - 1][2] : 0  // get last element's total, or 0
       const newTotal = Number(previousTotal) + Number(quantity)
       return [...acc, [price, quantity, newTotal]]
-    }, [] as (string | number)[][]) // calculate the running total for each element of the 2d array 
+    }, [] as (string | number)[][]) 
     const maxBidTotal = Number(formattedBids.at(-1)[2])
     
 
-    const asks = Object.entries(orderbookData.asks)
-    let formattedAsks = asks.map(([price, quantity]) => ([Number(price).toFixed(2),quantity]) )
-
+    const asks = orderbookData.asks
+    let formattedAsks = asks.map(({price, quantity}) => [Number(price).toFixed(2),quantity]) 
     formattedAsks = formattedAsks.reduce((acc, [price, quantity]) => {
       const previousTotal = acc.length > 0 ? acc[acc.length - 1][2] : 0
       const newTotal = Number(previousTotal) + Number(quantity) 

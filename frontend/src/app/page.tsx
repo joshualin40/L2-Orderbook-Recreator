@@ -14,7 +14,7 @@ export default function Page() {
   const [ticker, setTicker] = useState("")
   const [date, setDate] = useState("") // string
   const [time, setTime] = useState("")
-  const [orderbook, setOrderbook] = useState(null) // the orderbook Data 
+  const [orderbook, setOrderbook] = useState({bids: [], asks: []}) // the orderbook Data 
   const [loading, setLoading] = useState(false)
   const [error, showError] = useState(false)
 

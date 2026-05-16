@@ -139,13 +139,14 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
     // create JSON 
     json j; 
 
-      std::vector<std::pair<int64_t, int64_t>> askLevels = userbook.getAskLevels(); 
-    for (int i = askLevels.size() - 1; i >= 0; i--)
-        j["asks"][std::to_string(askLevels[i].first / 1e9)] = askLevels[i].second; 
-
+    std::vector<std::pair<int64_t, int64_t>> askLevels = userbook.getAskLevels(); 
     std::vector<std::pair<int64_t, int64_t>> bidLevels = userbook.getBidLevels(); 
-    for (int i = 0; i < bidLevels.size(); i++)
-        j["bids"][std::to_string(bidLevels[i].first / 1e9)] = bidLevels[i].second; 
+
+    for (const auto& [price, qty] : askLevels)
+        j["asks"].push_back({{"price", price / 1e9}, {"quantity", qty}});
+
+    for (const auto& [price, qty] : bidLevels)
+        j["bids"].push_back({{"price", price / 1e9}, {"quantity", qty}});
 
     return j;
 }

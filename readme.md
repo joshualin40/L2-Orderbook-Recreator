@@ -5,7 +5,7 @@ Reconstructs a L2 orderbook from [Databento](https://databento.com/) market data
 Built with a C++ backend and React frontend.
 
 ### Demo
-https://github.com/user-attachments/assets/b9d0e75a-c54e-4266-9a11-ff1a08f50e51
+ttps://github.com/user-attachments/assets/b0799826-c351-43c4-9029-7fede214f323
 
 ## Setup
 

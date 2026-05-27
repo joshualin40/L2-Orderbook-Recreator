@@ -20,7 +20,7 @@ export default function Page() {
   const [loaded, setLoaded] = useState(false)
   const [empty, setEmpty] = useState(false)
 
-  
+
   async function fetchData(currentTicker: string, currentDate: string, currenttime: string) {
     console.log("fetchData called", { currentTicker, currentDate, currenttime })
       try {

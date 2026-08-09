@@ -70,19 +70,18 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
         Order newOrder(timestamp, Mbo_msg.order_id, Mbo_msg.size, Mbo_msg.price, Mbo_msg.side, Mbo_msg.action);
         Daybook.processEvent(newOrder);
 
-
         if (initialtime == 0) // capture initial time stamp 
         {
             initialtime = timestamp;
             currenttime = initialtime; 
         }
-        if (timestamp >= currenttime) // if the timestamp of the record is greater than the currenttime, create a snapshot and store it in snaphots
+        if (timestamp >= currenttime)
         {
             L2snapshot snapshot;
-            snapshot.takeSnapshot(Daybook); 
-            snapshot.time = currenttime - tt_ns; 
-            snapshots[currenttime - tt_ns] = snapshot;
-            currenttime += SNAPSHOT_INTERVAL_NS; // take a snapshot every hour
+            snapshot.takeSnapshot(Daybook);
+            snapshot.time = timestamp - tt_ns;   // ns since midnight, actual capture time
+            snapshots[snapshot.time] = snapshot; 
+            do { currenttime += SNAPSHOT_INTERVAL_NS; } while (timestamp >= currenttime);
         }
     }
 

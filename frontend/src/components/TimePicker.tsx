@@ -9,8 +9,8 @@ export const TimePicker = ({onTimeChange, tickerName, date, onSubmit}) =>
     const [minutes, setMinutes] = useState("01")
     const [seconds, setSeconds] = useState("01")
     const hoursList = Array.from({ length: 16}, (_, i) => i + 8)
-    const minutesList = Array.from({ length: 60}, (_, i) => i + 1)
-    const secondsList = Array.from({ length: 60}, (_, i) => i + 1)
+    const minutesList = Array.from({ length: 60}, (_, i) => i)
+    const secondsList = Array.from({ length: 60}, (_, i) => i)
 
 
   

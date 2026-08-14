@@ -22,7 +22,7 @@ void L2snapshot::print() const
 {
     int count = 0; 
     std::cout << "START OF NEW ORDERBOOK AT " << getTimeStamp() << std::endl;
-     std::cout << "\033[31mASKS\033[0m" << std::endl;
+    td::cout << "\033[31mASKS\033[0m" << std::endl;
 
     std::vector<std::pair<int64_t, int64_t>> bidLevels;
     std::vector<std::pair<int64_t, int64_t>> askLevels;

@@ -12,6 +12,8 @@
 #include "L2snapshot.h"
 #include <nlohmann/json.hpp>
 #include "httplib.h"
+#include <stdexcept>   // std::runtime_error
+#include <cstdlib>     // std::getenv
 
 namespace db = databento;
 using json = nlohmann::json;
@@ -34,8 +36,6 @@ json getOrderbook(std::string date, std::string time, std::string ticker)
     inputtimenanoseconds = toNanoSeconds(time);
     date += "T00:00:00";
     enddate += "T23:59:59"; 
-
-
 
     // Step 2: Extract the full day of trades of the ticker
     const char* apiKey = std::getenv("API_KEY");

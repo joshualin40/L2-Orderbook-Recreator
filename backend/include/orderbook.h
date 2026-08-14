@@ -10,6 +10,9 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <unordered_map>
+#include <deque>
+#include <vector>
 
 // start with implementation of OrderBook class with just 
 class Orderbook

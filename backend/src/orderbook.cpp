@@ -208,9 +208,9 @@ void Orderbook::print() const
     }
     for (int i = (int)askLevels.size() - 1; i >= 0; i--) {
         std::cout << "\033[31m"  
-                  << std::setw(12) << std::fixed << std::setprecision(2)<< askLevels[i].first / 1e9
-                  << std::setw(10) << askLevels[i].second
-                  << "\033[0m\n";
+                << std::setw(12) << std::fixed << std::setprecision(2)<< askLevels[i].first / 1e9
+                << std::setw(10) << askLevels[i].second
+                << "\033[0m\n";
     } 
 
     // spread
@@ -231,9 +231,9 @@ void Orderbook::print() const
     }
     for (int i = 0; i < (int)bidLevels.size(); i++) {
         std::cout << "\033[1;32m"
-                 << std::setw(12) << std::fixed << std::setprecision(2)<< bidLevels[i].first / 1e9
-                  << std::setw(10) << bidLevels[i].second
-                  << "\033[0m\n";
+                << std::setw(12) << std::fixed << std::setprecision(2)<< bidLevels[i].first / 1e9
+                << std::setw(10) << bidLevels[i].second
+                << "\033[0m\n";
     } 
 }
 
